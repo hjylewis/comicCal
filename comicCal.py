@@ -13,6 +13,7 @@ url = 'https://imagecomics.com/comics/release-archive/'
 headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36' }
 
 
+print("comicCal script starting...")
 with open('/home/henry/server/jobs/comicCal/credentials.json') as data_file:    
     data = json.load(data_file)
     client_email = data['client_email']
@@ -51,3 +52,4 @@ for comic in comics:
 			print(created_event['id'])
 		else:
 			print("Already Exists")
+print("comicCal script done.")
