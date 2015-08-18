@@ -14,7 +14,7 @@ headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.
 
 
 print("comicCal script starting...")
-with open('/home/henry/server/jobs/comicCal/credentials.json') as data_file:    
+with open('credentials.json') as data_file:    
     data = json.load(data_file)
     client_email = data['client_email']
     private_key = bytes(data['private_key'], 'UTF-8')
@@ -35,7 +35,7 @@ for comic in comics:
 	with urllib.request.urlopen(req) as response:
 	   html = response.read()
 
-	soup = BeautifulSoup(html)
+	soup = BeautifulSoup(html, "html.parser")
 
 	for h3 in soup.find_all('h3'):
 		title = h3.text
@@ -48,7 +48,6 @@ for comic in comics:
 			created_event = service.events().quickAdd(
 			    calendarId=calendarId,
 			    text=title + ' on ' + date).execute()
-
 			print(created_event['id'])
 		else:
 			print("Already Exists")
