@@ -21,7 +21,7 @@ with open('credentials.json') as data_file:
     calendarId = data['calendarId']
 
 credentials = SignedJwtAssertionCredentials(client_email, private_key,
-	scope=['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly'])
+    scope=['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly'])
 
 http_auth = credentials.authorize(Http())
 
@@ -30,25 +30,25 @@ service = build(serviceName='calendar', version='v3', http=http_auth)
 
 for comic in comics:
 
-	req = urllib.request.Request(url + comic, None, headers)
+    req = urllib.request.Request(url + comic, None, headers)
 
-	with urllib.request.urlopen(req) as response:
-	   html = response.read()
+    with urllib.request.urlopen(req) as response:
+       html = response.read()
 
-	soup = BeautifulSoup(html, "html.parser")
-	for headline in soup.find_all(class_="book__headline"):
-		title = headline.text
-		date = headline.parent.find(class_="book__text").text[11:]
-		print("\t" + date)
-		print("\t" + title + " " + date)
-		result = service.events().list(
-			calendarId=calendarId,
-			q=title).execute()
-		if (result['items'] == []):
-			created_event = service.events().quickAdd(
-			    calendarId=calendarId,
-			    text=title + ' on ' + date).execute()
-			print(created_event['id'])
-		else:
-			print("\tAlready Exists")
+    soup = BeautifulSoup(html, "html.parser")
+    for headline in soup.find_all(class_="book__headline"):
+        title = headline.text
+        date = headline.parent.find(class_="book__text").text[11:]
+        print("\t" + date)
+        print("\t" + title + " " + date)
+        result = service.events().list(
+            calendarId=calendarId,
+            q=title).execute()
+        if (result['items'] == []):
+            created_event = service.events().quickAdd(
+                calendarId=calendarId,
+                text=title + ' on ' + date).execute()
+            print(created_event['id'])
+        else:
+            print("\tAlready Exists")
 print("comicCal script done.")
