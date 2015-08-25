@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 
+import os
 from bs4 import BeautifulSoup
 import urllib.request
 from oauth2client.client import SignedJwtAssertionCredentials
@@ -14,7 +15,8 @@ headers = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.
 
 
 print("comicCal script starting...")
-with open('credentials.json') as data_file:    
+cd = os.path.dirname(os.path.abspath(__file__))
+with open(cd + '/credentials.json') as data_file:    
     data = json.load(data_file)
     client_email = data['client_email']
     private_key = bytes(data['private_key'], 'UTF-8')
