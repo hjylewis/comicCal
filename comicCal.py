@@ -36,11 +36,11 @@ for comic in comics:
 	   html = response.read()
 
 	soup = BeautifulSoup(html, "html.parser")
-
-	for h3 in soup.find_all('h3'):
-		title = h3.text
-		date = h3.parent.find('h4').text 
-		print(title + " " + date)
+	for headline in soup.find_all(class_="book__headline"):
+		title = headline.text
+		date = headline.parent.find(class_="book__text").text[11:]
+		print("\t" + date)
+		print("\t" + title + " " + date)
 		result = service.events().list(
 			calendarId=calendarId,
 			q=title).execute()
@@ -50,5 +50,5 @@ for comic in comics:
 			    text=title + ' on ' + date).execute()
 			print(created_event['id'])
 		else:
-			print("Already Exists")
+			print("\tAlready Exists")
 print("comicCal script done.")
