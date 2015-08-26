@@ -5,7 +5,7 @@ Script that imports [Image](https://imagecomics.com/) comicbook issue releases i
 * google-api-python-client
 * pyOpenSSL
 * pycrypto
-* BeautifulSoup4
+* BeautifulSoup4 4.4
 
 ###Setup
 1. Go to https://code.google.com/apis/console/
